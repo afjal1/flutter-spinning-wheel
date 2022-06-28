@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_spinning_wheel/flutter_spinning_wheel.dart';
 
 void main() {
-  SystemChrome.setEnabledSystemUIOverlays([]);
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
   runApp(MyApp());
 }
 
@@ -60,16 +60,16 @@ class MyHomePage extends StatelessWidget {
     );
   }
 
-  Widget buildNavigationButton({String text, Function onPressedFn}) {
+  Widget buildNavigationButton({String? text, Function? onPressedFn}) {
     return FlatButton(
       color: Color.fromRGBO(255, 255, 255, 0.3),
       textColor: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(50.0),
       ),
-      onPressed: onPressedFn,
+      onPressed: onPressedFn!(),
       child: Text(
-        text,
+        text!,
         style: TextStyle(color: Colors.white, fontSize: 18.0),
       ),
     );
@@ -104,8 +104,9 @@ class Basic extends StatelessWidget {
             ),
             StreamBuilder(
               stream: _dividerController.stream,
-              builder: (context, snapshot) =>
-                  snapshot.hasData ? BasicScore(snapshot.data) : Container(),
+              builder: (context, snapshot) => snapshot.hasData
+                  ? BasicScore(snapshot.data as int)
+                  : Container(),
             )
           ],
         ),
@@ -117,7 +118,7 @@ class Basic extends StatelessWidget {
 }
 
 class BasicScore extends StatelessWidget {
-  final int selected;
+  final int? selected;
 
   final Map<int, String> labels = {
     1: 'Purple',
@@ -175,8 +176,9 @@ class Roulette extends StatelessWidget {
             SizedBox(height: 30),
             StreamBuilder(
               stream: _dividerController.stream,
-              builder: (context, snapshot) =>
-                  snapshot.hasData ? RouletteScore(snapshot.data) : Container(),
+              builder: (context, snapshot) => snapshot.hasData
+                  ? RouletteScore(snapshot.data as int)
+                  : Container(),
             ),
             SizedBox(height: 30),
             new RaisedButton(
@@ -196,7 +198,7 @@ class Roulette extends StatelessWidget {
 }
 
 class RouletteScore extends StatelessWidget {
-  final int selected;
+  final int? selected;
 
   final Map<int, String> labels = {
     1: '1000\$',

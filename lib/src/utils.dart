@@ -15,18 +15,18 @@ const pi_2_5 = pi * 2.5;
 const pi_2 = pi * 2;
 
 class SpinVelocity {
-  final double height;
-  final double width;
+  final double? height;
+  final double? width;
 
-  double get width_0_5 => width / 2;
-  double get height_0_5 => height / 2;
+  double get width_0_5 => width! / 2;
+  double get height_0_5 => height! / 2;
 
   SpinVelocity({@required this.height, @required this.width});
 
   double getVelocity(Offset position, Offset pps) {
     var cuadrantIndex = _getCuadrantFromOffset(position);
     var cuadrant = cuadrants[cuadrantIndex];
-    return (cuadrant.dx * pps.dx) + (cuadrant.dy * pps.dy);
+    return (cuadrant!.dx * pps.dx) + (cuadrant.dy * pps.dy);
   }
 
   /// transforms (x,y) into radians assuming we start at positive y axis as 0
@@ -47,16 +47,16 @@ class SpinVelocity {
       ? (angle > pi_0_5 ? (pi_2_5 - angle) : (pi_0_5 - angle))
       : pi_0_5 - angle;
 
-  bool contains(Offset p) => Size(width, height).contains(p);
+  bool contains(Offset p) => Size(width!, height!).contains(p);
 }
 
 class NonUniformCircularMotion {
-  final double resistance;
+  final double? resistance;
 
   NonUniformCircularMotion({@required this.resistance});
 
   /// returns the acceleration based on the resistance provided in the constructor
-  double get acceleration => resistance * -7 * pi;
+  double get acceleration => resistance! * -7 * pi;
 
   /// distance covered in a specified time with initial velocity
   /// 𝜑=𝜑0+𝜔·𝑡+1/2·𝛼·𝑡2
